@@ -1,18 +1,31 @@
 import 'package:flutter/material.dart';
-import 'package:first/screen/homescreen.dart';
+import 'package:firstapp/screen/main_screen.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:provider/provider.dart';
+import 'firebase_options.dart';
+import 'package:firstapp/provider/information_default.dart';
 
-void main() {
-  runApp(const MyApp());
+
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
+  runApp(MyApp());
 }
 
+
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  MyApp({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demo',
-      home: MainScreen(),
+    return ChangeNotifierProvider(
+      create: (context) => InformationProvider(),
+      child: MaterialApp(
+        title: '작심 며칠?',
+        home: MainScreen(),
+      ),
     );
   }
 }
