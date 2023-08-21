@@ -1,24 +1,32 @@
 import 'package:flutter/material.dart';
 
-
 class LoginScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text("로그인"),
+        backgroundColor: Colors.blueGrey[900],
       ),
-      body: Column(
-        children: [
-          Email(),
-          Password(),
-          Login(),
-          Padding(
-            padding: EdgeInsets.all(8.0),
-            child: Divider(thickness: 1),
-          ),
-          Register(),
-        ],
+      body: SingleChildScrollView(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            SizedBox(height: 50),
+            SizedBox(height: 20),
+            Email(),
+            Password(),
+            SizedBox(height: 20),
+            LoginButton(),
+            SizedBox(height: 16),
+            Text(
+              '또는',
+              style: TextStyle(color: Colors.grey[700]),
+            ),
+            SizedBox(height: 16),
+            RegisterButton(),
+          ],
+        ),
       ),
     );
   }
@@ -27,15 +35,14 @@ class LoginScreen extends StatelessWidget {
 class Email extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: EdgeInsets.fromLTRB(20, 5, 20, 5),
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 32),
       child: TextField(
-        onChanged: (email) {
-        },
+        onChanged: (email) {},
         keyboardType: TextInputType.emailAddress,
         decoration: InputDecoration(
           labelText: '이메일',
-          helperText: '',
+          prefixIcon: Icon(Icons.email),
         ),
       ),
     );
@@ -45,43 +52,41 @@ class Email extends StatelessWidget {
 class Password extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: EdgeInsets.fromLTRB(20, 5, 20, 5),
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 16),
       child: TextField(
         onChanged: (password) {},
         obscureText: true,
         decoration: InputDecoration(
           labelText: '비밀번호',
-          helperText: '',
+          prefixIcon: Icon(Icons.lock),
         ),
       ),
     );
   }
 }
 
-class Login extends StatelessWidget {
+class LoginButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: MediaQuery.of(context).size.width * 0.85,
-      height: MediaQuery.of(context).size.height * 0.05,
+      width: 200,
+      height: 50,
       child: ElevatedButton(
         style: ElevatedButton.styleFrom(
+          backgroundColor: Colors.blueGrey[900],
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(30.0),
           ),
         ),
-        onPressed: ()  {
-
-
-        },
+        onPressed: () {},
         child: Text('로그인'),
       ),
     );
   }
 }
 
-class Register extends StatelessWidget {
+class RegisterButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var theme = Theme.of(context);
@@ -90,9 +95,12 @@ class Register extends StatelessWidget {
         Navigator.of(context).pushNamed('/register');
       },
       child: Text(
-        '이메일 회원가입',
-        style: TextStyle(color: theme.primaryColor),
+        '회원가입',
+        style: TextStyle(color: Colors.blueGrey[900], fontSize: 16),
       ),
     );
   }
 }
+
+
+

@@ -4,6 +4,8 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:provider/provider.dart';
 import 'firebase_options.dart';
 import 'package:firstapp/provider/information_default.dart';
+import 'package:firstapp/screen/login_screen.dart';
+import 'package:firstapp/screen/register_screen.dart';
 
 
 void main() async {
