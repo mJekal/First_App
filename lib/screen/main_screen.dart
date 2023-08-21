@@ -3,8 +3,24 @@ import 'package:provider/provider.dart';
 import 'package:firstapp/provider/information_default.dart';
 import 'package:firstapp/screen/information_screen.dart';
 import 'package:firstapp/model/information.dart';
+import 'package:firstapp/screen/login_screen.dart';
 
-class MainScreen extends StatelessWidget {
+class MainScreen extends StatefulWidget {
+  @override
+  State<MainScreen> createState() => _MainScreenState();
+}
+
+class _MainScreenState extends State<MainScreen> {
+  int _currentIndex = 0;
+
+  void _onTap(int index) {
+    if (index == 0) {
+      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => MainScreen()));
+    } else if (index == 1) {
+      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => LoginScreen()));
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     final informationProvider = Provider.of<InformationProvider>(context);
@@ -46,6 +62,8 @@ class MainScreen extends StatelessWidget {
         },
       ),
       bottomNavigationBar: BottomNavigationBar(
+        onTap: _onTap, // Use the _onTap function here
+        currentIndex: _currentIndex,
         backgroundColor: Colors.blueGrey[900],
         selectedItemColor: Colors.white,
         unselectedItemColor: Colors.grey[400],
@@ -62,7 +80,6 @@ class MainScreen extends StatelessWidget {
       ),
     );
   }
-
 
   Widget _listItem(BuildContext context, Information information, int index) {
     final goal = information.goal ?? '';
@@ -124,7 +141,6 @@ class MainScreen extends StatelessWidget {
     );
   }
 
-
   void _showDialog(BuildContext context, Information information, int index,
       String promise) {
     showDialog(
@@ -173,3 +189,5 @@ class MainScreen extends StatelessWidget {
     );
   }
 }
+
+

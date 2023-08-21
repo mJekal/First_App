@@ -8,16 +8,20 @@ class InformationProvider with ChangeNotifier {
 
   List<Information> get informationList => _informationList;
 
+  Information _informationFromSnapshot(DocumentSnapshot snapshot) {
+    Map<String, dynamic> data = snapshot.data() as Map<String, dynamic>;
+    return Information.fromMap(data);
+  }
+
+
   Future<void> fetchInformationList() async {
     try {
-      final QuerySnapshot snapshot = await _firestore.collection('information').get();
+      final QuerySnapshot snapshot = await _firestore.collection('information')
+          .orderBy('createdAt', descending: false)
+          .get();
+
       final List<Information> infoList = snapshot.docs.map((doc) {
-        Map<String, dynamic> data = doc.data() as Map<String, dynamic>;
-        return Information(
-          goal: data['goal'],
-          promise: data['promise'],
-          dDay: data['dDay'],
-        );
+        return Information.fromMap(doc.data() as Map<String, dynamic>);
       }).toList();
 
       _informationList = infoList;
@@ -27,19 +31,30 @@ class InformationProvider with ChangeNotifier {
     }
   }
 
+
+
   Future<void> addInformation(Information info) async {
     try {
-      await _firestore.collection('information').add({
-        'goal': info.goal,
-        'promise': info.promise,
-        'dDay': info.dDay,
-      });
-      _informationList.add(info);
+      final data = info.toMap();
+
+      data['createdAt'] = FieldValue.serverTimestamp();
+
+      final docRef = await _firestore.collection('information').add(data);
+
+
+      final addedInfo = Information(
+        goal: info.goal,
+        promise: info.promise,
+        dDay: info.dDay,
+      );
+      _informationList.add(addedInfo);
+
       notifyListeners();
     } catch (error) {
       print('문서 추가 오류: $error');
     }
   }
+
 
   Future<void> deleteInformation(int index) async {
     try {
@@ -59,4 +74,25 @@ class InformationProvider with ChangeNotifier {
       print('문서 삭제 오류: $error');
     }
   }
+
+  Future<void> saveInformationToFirestore(Information info) async {
+    final docRef = _firestore.collection('information').doc(info.goal);
+
+    final data = {
+      'goal': info.goal,
+      'promise': info.promise,
+      'dDay': info.dDay,
+    };
+
+    await docRef.set(data);
+  }
+
+  Stream<List<Information>> readInformationStream() {
+    return _firestore.collection('information').snapshots().map((snapshot) {
+      return snapshot.docs.map((doc) {
+        return _informationFromSnapshot(doc);
+      }).toList();
+    });
+  }
 }
+
