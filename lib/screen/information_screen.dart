@@ -1,3 +1,4 @@
+import 'package:firstapp/model/authentication.dart';
 import 'package:flutter/material.dart';
 import 'package:firstapp/provider/information_default.dart';
 import 'package:firstapp/model/information.dart';
@@ -19,15 +20,21 @@ class _InformationFormState extends State<InformationForm> {
       _formKey.currentState!.save();
       String dDay = 'D+${DateTime.now().difference(_selectedDate).inDays + 1}';
 
-      final informationProvider = Provider.of<InformationProvider>(context, listen: false);
+      final authProvider = Provider.of<FirebaseAuthProvider>(context, listen: false);
 
-      informationProvider.addInformation(
-        Information(
-          goal: _goal,
-          promise: _promise,
-          dDay: dDay,
-        ),
-      );
+      if (authProvider.user != null) {
+        final informationProvider = Provider.of<InformationProvider>(context, listen: false);
+
+        informationProvider.addInformation(
+          Information(
+            goal: _goal,
+            promise: _promise,
+            dDay: dDay,
+          ),
+          authProvider.user!.uid,
+        );
+      }
+
       Navigator.pop(context);
     }
   }

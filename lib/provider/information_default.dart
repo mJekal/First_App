@@ -13,6 +13,21 @@ class InformationProvider with ChangeNotifier {
     return Information.fromMap(data);
   }
 
+  Future<int> getGoalCountForUser(String userId) async {
+    try {
+      final QuerySnapshot snapshot = await _firestore
+          .collection('information')
+          .where('userId', isEqualTo: userId)
+          .get();
+
+      return snapshot.docs.length;
+    } catch (error) {
+      print('Error fetching goal count: $error');
+      return 0;
+    }
+  }
+
+
 
   Future<void> fetchInformationList() async {
     try {
@@ -32,15 +47,33 @@ class InformationProvider with ChangeNotifier {
   }
 
 
+  Future<void> fetchInformationListForUser(String userId) async {
+    try {
+      final QuerySnapshot snapshot = await _firestore.collection('information')
+          .where('userId', isEqualTo: userId)
+          .orderBy('createdAt', descending: false)
+          .get();
 
-  Future<void> addInformation(Information info) async {
+      final List<Information> infoList = snapshot.docs.map((doc) {
+        return Information.fromMap(doc.data() as Map<String, dynamic>);
+      }).toList();
+
+      _informationList = infoList;
+      notifyListeners();
+    } catch (error) {
+      print('문서 검색 오류: $error');
+    }
+  }
+
+
+  Future<void> addInformation(Information info, String userId) async {
     try {
       final data = info.toMap();
 
       data['createdAt'] = FieldValue.serverTimestamp();
+      data['userId'] = userId; // Add the user ID to the data
 
       final docRef = await _firestore.collection('information').add(data);
-
 
       final addedInfo = Information(
         goal: info.goal,
@@ -54,6 +87,7 @@ class InformationProvider with ChangeNotifier {
       print('문서 추가 오류: $error');
     }
   }
+
 
 
   Future<void> deleteInformation(int index) async {

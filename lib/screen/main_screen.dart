@@ -1,11 +1,14 @@
+import 'package:firstapp/model/authentication.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:firstapp/provider/information_default.dart';
 import 'package:firstapp/screen/information_screen.dart';
 import 'package:firstapp/model/information.dart';
-import 'package:firstapp/screen/login_screen.dart';
+import 'package:firstapp/screen/profile_screen.dart';
 
 class MainScreen extends StatefulWidget {
+  const MainScreen({super.key});
+
   @override
   State<MainScreen> createState() => _MainScreenState();
 }
@@ -15,20 +18,23 @@ class _MainScreenState extends State<MainScreen> {
 
   void _onTap(int index) {
     if (index == 0) {
-      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => MainScreen()));
+      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => const MainScreen()));
     } else if (index == 1) {
-      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => LoginScreen()));
+      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => ProfileScreen()));
     }
   }
 
   @override
   Widget build(BuildContext context) {
+    final authProvider = Provider.of<FirebaseAuthProvider>(context, listen: false);
+    final currentUser = authProvider.user;
+
     final informationProvider = Provider.of<InformationProvider>(context);
-    informationProvider.fetchInformationList();
+    informationProvider.fetchInformationListForUser(currentUser!.uid); // 수정된 부분
 
     return Scaffold(
       appBar: AppBar(
-        title: Text('작심 며칠?'),
+        title: const Text('작심 며칠?'),
         backgroundColor: Colors.blueGrey[900],
       ),
       floatingActionButton: FloatingActionButton(
@@ -36,15 +42,16 @@ class _MainScreenState extends State<MainScreen> {
           Navigator.push(context, MaterialPageRoute(
               builder: (context) => InformationForm()));
         },
-        child: Icon(Icons.add),
+        child: const Icon(Icons.add),
         backgroundColor: Colors.blueGrey[900],
       ),
-      body: Consumer<InformationProvider>(
+      body:Consumer<InformationProvider>(
         builder: (context, informationProvider, _) {
+          informationProvider.fetchInformationListForUser(authProvider.user!.uid);
           final informationList = informationProvider.informationList;
 
           if (informationList.isEmpty) {
-            return Center(
+            return const Center(
               child: Text(
                 '목표를 추가해주세요.',
                 style: TextStyle(fontSize: 18),
@@ -54,7 +61,7 @@ class _MainScreenState extends State<MainScreen> {
 
           return ListView.separated(
             itemCount: informationList.length,
-            separatorBuilder: (context, index) => SizedBox(height: 16),
+            separatorBuilder: (context, index) => const SizedBox(height: 16),
             itemBuilder: (context, index) {
               return _listItem(context, informationList[index], index);
             },
@@ -62,7 +69,7 @@ class _MainScreenState extends State<MainScreen> {
         },
       ),
       bottomNavigationBar: BottomNavigationBar(
-        onTap: _onTap, // Use the _onTap function here
+        onTap: _onTap,
         currentIndex: _currentIndex,
         backgroundColor: Colors.blueGrey[900],
         selectedItemColor: Colors.white,
@@ -81,6 +88,9 @@ class _MainScreenState extends State<MainScreen> {
     );
   }
 
+
+
+
   Widget _listItem(BuildContext context, Information information, int index) {
     final goal = information.goal ?? '';
     final promise = information.promise ?? '';
@@ -91,7 +101,7 @@ class _MainScreenState extends State<MainScreen> {
         _showDialog(context, information, index, promise);
       },
       child: Container(
-        padding: EdgeInsets.all(12),
+        padding: const EdgeInsets.all(12),
         decoration: BoxDecoration(
           color: Colors.white,
           borderRadius: BorderRadius.circular(8),
@@ -100,7 +110,7 @@ class _MainScreenState extends State<MainScreen> {
               color: Colors.grey.withOpacity(0.3),
               spreadRadius: 1,
               blurRadius: 2,
-              offset: Offset(0, 2),
+              offset: const Offset(0, 2),
             ),
           ],
         ),
@@ -109,18 +119,18 @@ class _MainScreenState extends State<MainScreen> {
           children: [
             Text(
               goal,
-              style: TextStyle(
+              style: const TextStyle(
                 fontSize: 18,
                 fontWeight: FontWeight.bold,
               ),
             ),
-            SizedBox(height: 2),
+            const SizedBox(height: 2),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
                   promise,
-                  style: TextStyle(
+                  style: const TextStyle(
                     fontSize: 14,
                     fontWeight: FontWeight.bold,
                   ),
@@ -147,22 +157,22 @@ class _MainScreenState extends State<MainScreen> {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text('결심'),
+          title: const Text('결심'),
           content: Column(
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
                 '${information.goal} 결심 한지? ${information.dDay}',
-                style: TextStyle(
+                style: const TextStyle(
                   fontSize: 18,
                   fontWeight: FontWeight.bold,
                 ),
               ),
-              SizedBox(height: 8),
+              const SizedBox(height: 8),
               Text(
                 promise,
-                style: TextStyle(
+                style: const TextStyle(
                   fontWeight: FontWeight.bold,
                   fontSize: 18,
                 ),
@@ -177,11 +187,11 @@ class _MainScreenState extends State<MainScreen> {
                 informationProvider.deleteInformation(index);
                 Navigator.pop(context);
               },
-              child: Text('삭제'),
+              child: const Text('삭제'),
             ),
             TextButton(
               onPressed: () => Navigator.pop(context, 'OK'),
-              child: Text('OK'),
+              child: const Text('OK'),
             ),
           ],
         );
@@ -189,5 +199,4 @@ class _MainScreenState extends State<MainScreen> {
     );
   }
 }
-
 
