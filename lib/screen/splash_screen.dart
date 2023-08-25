@@ -1,4 +1,3 @@
-
 import 'dart:async';
 
 import 'package:firstapp/model/authentication.dart';
@@ -18,8 +17,9 @@ class _SplashScreenState extends State<SplashScreen> {
   Future<bool> checkLogin() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     final authClient =
-    Provider.of<FirebaseAuthProvider>(context, listen: false);
-    final informationProvider = Provider.of<InformationProvider>(context, listen: false);
+        Provider.of<FirebaseAuthProvider>(context, listen: false);
+    final informationProvider =
+        Provider.of<InformationProvider>(context, listen: false);
     bool isLogin = prefs.getBool('isLogin') ?? false;
     print("로그인 상태 : " + isLogin.toString());
     if (isLogin) {
@@ -29,7 +29,6 @@ class _SplashScreenState extends State<SplashScreen> {
       await authClient.loginWithEmail(email!, password!).then((loginStatus) {
         if (loginStatus == AuthStatus.loginSuccess) {
           print("로그인 성공");
-
         } else {
           print("로그인 실패");
           isLogin = false;
@@ -43,12 +42,12 @@ class _SplashScreenState extends State<SplashScreen> {
   void moveScreen() async {
     await checkLogin().then((isLogin) async {
       if (isLogin) {
-
-        final authProvider = Provider.of<FirebaseAuthProvider>(context, listen: false);
+        final authProvider =
+            Provider.of<FirebaseAuthProvider>(context, listen: false);
         final currentUser = authProvider.user;
 
-
-        final informationProvider = Provider.of<InformationProvider>(context, listen: false);
+        final informationProvider =
+            Provider.of<InformationProvider>(context, listen: false);
         await informationProvider.fetchInformationListForUser(currentUser!.uid);
 
         Navigator.of(context).pushReplacementNamed('/main');
@@ -73,16 +72,10 @@ class _SplashScreenState extends State<SplashScreen> {
 
   @override
   Widget build(BuildContext context) {
-
-    double screenWidth = MediaQuery.of(context).size.width;
-    double screenHeight = MediaQuery.of(context).size.height;
-
     return Scaffold(
       appBar: null,
       body: Container(
-        width: screenWidth,
-        height: screenHeight,
-        child: Image.asset('lib/assets/Logo.png', fit: BoxFit.contain),
+        child: Image.asset("lib/assets/Logo.png", fit: BoxFit.cover),
       ),
     );
   }

@@ -27,11 +27,10 @@ class InformationProvider with ChangeNotifier {
     }
   }
 
-
-
   Future<void> fetchInformationList() async {
     try {
-      final QuerySnapshot snapshot = await _firestore.collection('information')
+      final QuerySnapshot snapshot = await _firestore
+          .collection('information')
           .orderBy('createdAt', descending: false)
           .get();
 
@@ -46,10 +45,10 @@ class InformationProvider with ChangeNotifier {
     }
   }
 
-
   Future<void> fetchInformationListForUser(String userId) async {
     try {
-      final QuerySnapshot snapshot = await _firestore.collection('information')
+      final QuerySnapshot snapshot = await _firestore
+          .collection('information')
           .where('userId', isEqualTo: userId)
           .orderBy('createdAt', descending: false)
           .get();
@@ -65,13 +64,12 @@ class InformationProvider with ChangeNotifier {
     }
   }
 
-
   Future<void> addInformation(Information info, String userId) async {
     try {
       final data = info.toMap();
 
       data['createdAt'] = FieldValue.serverTimestamp();
-      data['userId'] = userId; // Add the user ID to the data
+      data['userId'] = userId;
 
       final docRef = await _firestore.collection('information').add(data);
 
@@ -87,8 +85,6 @@ class InformationProvider with ChangeNotifier {
       print('문서 추가 오류: $error');
     }
   }
-
-
 
   Future<void> deleteInformation(int index) async {
     try {
@@ -129,4 +125,3 @@ class InformationProvider with ChangeNotifier {
     });
   }
 }
-

@@ -14,6 +14,7 @@ class LoginScreen extends StatelessWidget {
         appBar: AppBar(
           automaticallyImplyLeading: false,
           title: const Text("로그인"),
+          centerTitle: true,
           backgroundColor: Colors.blueGrey[900],
         ),
         body: SingleChildScrollView(
@@ -41,8 +42,6 @@ class LoginScreen extends StatelessWidget {
   }
 }
 
-
-
 class Email extends StatelessWidget {
   const Email({super.key});
 
@@ -53,7 +52,9 @@ class Email extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 32),
       child: TextField(
-        onChanged: (email) {loginField.setEmail(email);},
+        onChanged: (email) {
+          loginField.setEmail(email);
+        },
         keyboardType: TextInputType.emailAddress,
         decoration: const InputDecoration(
           labelText: '이메일',
@@ -73,7 +74,9 @@ class Password extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 16),
       child: TextField(
-        onChanged: (password) {loginField.setPassword(password);},
+        onChanged: (password) {
+          loginField.setPassword(password);
+        },
         obscureText: true,
         decoration: const InputDecoration(
           labelText: '비밀번호',
@@ -90,7 +93,7 @@ class LoginButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final authClient =
-    Provider.of<FirebaseAuthProvider>(context, listen: false);
+        Provider.of<FirebaseAuthProvider>(context, listen: false);
     final loginField = Provider.of<LoginModel>(context, listen: false);
     return SizedBox(
       width: 200,
@@ -102,24 +105,26 @@ class LoginButton extends StatelessWidget {
             borderRadius: BorderRadius.circular(30.0),
           ),
         ),
-    onPressed: () async {
-    await authClient
-        .loginWithEmail(loginField.email, loginField.password)
-        .then((loginStatus) {
-    if (loginStatus == AuthStatus.loginSuccess) {
-    ScaffoldMessenger.of(context)
-    ..hideCurrentSnackBar()
-    ..showSnackBar(
-    SnackBar(content: Text('${authClient.user!.email!}님 환영합니다!')),
-    );
-    Navigator.pushReplacementNamed(context, '/main');
-    } else {
-    ScaffoldMessenger.of(context)
-    ..hideCurrentSnackBar()
-    ..showSnackBar(
-    const SnackBar(content: Text('로그인에 실패했습니다.')),
-    );
-    }});},
+        onPressed: () async {
+          await authClient
+              .loginWithEmail(loginField.email, loginField.password)
+              .then((loginStatus) {
+            if (loginStatus == AuthStatus.loginSuccess) {
+              ScaffoldMessenger.of(context)
+                ..hideCurrentSnackBar()
+                ..showSnackBar(
+                  SnackBar(content: Text('${authClient.user!.email!}님 환영합니다!')),
+                );
+              Navigator.pushReplacementNamed(context, '/main');
+            } else {
+              ScaffoldMessenger.of(context)
+                ..hideCurrentSnackBar()
+                ..showSnackBar(
+                  const SnackBar(content: Text('로그인에 실패했습니다.')),
+                );
+            }
+          });
+        },
         child: const Text('로그인'),
       ),
     );
@@ -142,6 +147,3 @@ class RegisterButton extends StatelessWidget {
     );
   }
 }
-
-
-

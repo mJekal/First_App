@@ -14,6 +14,8 @@ class RegisterScreen extends StatelessWidget {
         appBar: AppBar(
           title: const Text('회원가입'),
           backgroundColor: Colors.blueGrey[900],
+          centerTitle: true,
+          automaticallyImplyLeading: false,
         ),
         body: const SingleChildScrollView(
           padding: EdgeInsets.symmetric(horizontal: 20, vertical: 20),
@@ -86,28 +88,23 @@ class Password2 extends StatelessWidget {
       },
       obscureText: true,
       decoration: InputDecoration(
-          labelText: '비밀번호 확인',
-          errorText: registerField.password != registerField.passwordConfirm ?
-          '비밀번호가 일치하지 않습니다.' : null,
+        labelText: '비밀번호 확인',
+        errorText: registerField.password != registerField.passwordConfirm
+            ? '비밀번호가 일치하지 않습니다.'
+            : null,
         border: const OutlineInputBorder(),
-
       ),
     );
   }
 }
-
-
-
-
-
-
 
 class RegisterButton extends StatelessWidget {
   const RegisterButton({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    final authClient = Provider.of<FirebaseAuthProvider>(context, listen: false);
+    final authClient =
+        Provider.of<FirebaseAuthProvider>(context, listen: false);
     final registerField = Provider.of<RegisterModel>(context, listen: false);
 
     return ElevatedButton(
@@ -128,7 +125,8 @@ class RegisterButton extends StatelessWidget {
               ..showSnackBar(
                 const SnackBar(content: Text('회원가입이 완료되었습니다.')),
               );
-            Navigator.of(context).pushReplacementNamed('/login'); // Navigate to login screen
+            Navigator.of(context)
+                .pushReplacementNamed('/login'); // Navigate to login screen
           } else {
             ScaffoldMessenger.of(context)
               ..hideCurrentSnackBar()

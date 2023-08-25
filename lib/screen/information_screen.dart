@@ -20,10 +20,12 @@ class _InformationFormState extends State<InformationForm> {
       _formKey.currentState!.save();
       String dDay = 'D+${DateTime.now().difference(_selectedDate).inDays + 1}';
 
-      final authProvider = Provider.of<FirebaseAuthProvider>(context, listen: false);
+      final authProvider =
+          Provider.of<FirebaseAuthProvider>(context, listen: false);
 
       if (authProvider.user != null) {
-        final informationProvider = Provider.of<InformationProvider>(context, listen: false);
+        final informationProvider =
+            Provider.of<InformationProvider>(context, listen: false);
 
         informationProvider.addInformation(
           Information(
@@ -51,6 +53,18 @@ class _InformationFormState extends State<InformationForm> {
       initialDate: _selectedDate,
       firstDate: DateTime(1900),
       lastDate: DateTime(2100),
+      builder: (BuildContext context, Widget? child) {
+        return Theme(
+          data: ThemeData.light().copyWith(
+            colorScheme: ColorScheme.fromSwatch(
+              primarySwatch: Colors.blueGrey,
+              accentColor: Colors.blueGrey[900],
+            ),
+            buttonTheme: ButtonThemeData(textTheme: ButtonTextTheme.primary),
+          ),
+          child: child!,
+        );
+      },
     );
     if (picked != null && picked != _selectedDate) {
       setState(() {
@@ -63,7 +77,8 @@ class _InformationFormState extends State<InformationForm> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('결심 한지?'),
+        title: const Text('작심 며칠?'),
+        centerTitle: true,
         backgroundColor: Colors.blueGrey[900],
       ),
       body: SingleChildScrollView(

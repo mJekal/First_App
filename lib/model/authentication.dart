@@ -46,15 +46,14 @@ class FirebaseAuthProvider with ChangeNotifier {
     }
   }
 
-
-Future<void> logout() async {
-  SharedPreferences prefs = await SharedPreferences.getInstance();
-  prefs.setBool('isLogin', false);
-  prefs.setString('email', '');
-  prefs.setString('password', '');
-  prefs.setString('uid', '');
-  user = null;
-  await authClient.signOut();
-  print("로그아웃");
-}
+  Future<void> logout() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.setBool('isLogin', false);
+    prefs.setString('email', '');
+    prefs.setString('password', '');
+    prefs.setString('uid', '');
+    user = null;
+    await authClient.signOut();
+    print("로그아웃");
+  }
 }

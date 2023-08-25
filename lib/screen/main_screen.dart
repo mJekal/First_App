@@ -1,10 +1,11 @@
-import 'package:firstapp/model/authentication.dart';
 import 'package:flutter/material.dart';
+import 'package:firstapp/model/authentication.dart';
 import 'package:provider/provider.dart';
 import 'package:firstapp/provider/information_default.dart';
 import 'package:firstapp/screen/information_screen.dart';
 import 'package:firstapp/model/information.dart';
 import 'package:firstapp/screen/profile_screen.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class MainScreen extends StatefulWidget {
   const MainScreen({super.key});
@@ -15,39 +16,46 @@ class MainScreen extends StatefulWidget {
 
 class _MainScreenState extends State<MainScreen> {
   int _currentIndex = 0;
+  User? currentUser;
 
   void _onTap(int index) {
     if (index == 0) {
-      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => const MainScreen()));
+      Navigator.pushReplacement(
+          context, MaterialPageRoute(builder: (context) => const MainScreen()));
     } else if (index == 1) {
-      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => ProfileScreen()));
+      Navigator.pushReplacement(
+          context, MaterialPageRoute(builder: (context) => ProfileScreen()));
     }
   }
 
   @override
-  Widget build(BuildContext context) {
-    final authProvider = Provider.of<FirebaseAuthProvider>(context, listen: false);
-    final currentUser = authProvider.user;
+  void initState() {
+    super.initState();
+    _currentIndex = 0;
+  }
 
-    final informationProvider = Provider.of<InformationProvider>(context);
-    informationProvider.fetchInformationListForUser(currentUser!.uid); // 수정된 부분
+  @override
+  Widget build(BuildContext context) {
+    currentUser =
+        Provider.of<FirebaseAuthProvider>(context, listen: false).user;
 
     return Scaffold(
       appBar: AppBar(
         title: const Text('작심 며칠?'),
         backgroundColor: Colors.blueGrey[900],
+        automaticallyImplyLeading: false,
+        centerTitle: true,
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          Navigator.push(context, MaterialPageRoute(
-              builder: (context) => InformationForm()));
+          Navigator.push(context,
+              MaterialPageRoute(builder: (context) => InformationForm()));
         },
         child: const Icon(Icons.add),
         backgroundColor: Colors.blueGrey[900],
       ),
-      body:Consumer<InformationProvider>(
+      body: Consumer<InformationProvider>(
         builder: (context, informationProvider, _) {
-          informationProvider.fetchInformationListForUser(authProvider.user!.uid);
           final informationList = informationProvider.informationList;
 
           if (informationList.isEmpty) {
@@ -87,9 +95,6 @@ class _MainScreenState extends State<MainScreen> {
       ),
     );
   }
-
-
-
 
   Widget _listItem(BuildContext context, Information information, int index) {
     final goal = information.goal ?? '';
@@ -182,8 +187,8 @@ class _MainScreenState extends State<MainScreen> {
           actions: <Widget>[
             TextButton(
               onPressed: () {
-                final informationProvider = Provider.of<InformationProvider>(
-                    context, listen: false);
+                final informationProvider =
+                    Provider.of<InformationProvider>(context, listen: false);
                 informationProvider.deleteInformation(index);
                 Navigator.pop(context);
               },
@@ -199,4 +204,3 @@ class _MainScreenState extends State<MainScreen> {
     );
   }
 }
-

@@ -5,7 +5,6 @@ class Information {
 
   Information({this.goal, this.promise, this.dDay});
 
-
   Map<String, dynamic> toMap() {
     return {
       'goal': goal,
