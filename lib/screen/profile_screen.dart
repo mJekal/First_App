@@ -1,3 +1,5 @@
+import 'package:firstapp/configs/color_styles.dart';
+import 'package:firstapp/configs/text_style.dart';
 import 'package:firstapp/screen/main_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:firstapp/model/authentication.dart';
@@ -23,9 +25,9 @@ class ProfileScreen extends StatelessWidget {
         return AlertDialog(
           title: Row(
             children: [
-              Icon(Icons.logout, color: Colors.blueGrey[900]),
+              Icon(Icons.logout, color: ColorStyle.blueGrey_900),
               SizedBox(width: 8),
-              Text('로그아웃', style: TextStyle(color: Colors.blueGrey[900])),
+              Text('로그아웃', style: TextStyle(color: ColorStyle.blueGrey_900)),
             ],
           ),
           content: Text('로그아웃 하시겠습니까?'),
@@ -47,16 +49,10 @@ class ProfileScreen extends StatelessWidget {
                       );
                     Navigator.of(context).pushReplacementNamed('/login');
                   },
-                  icon: Icon(Icons.logout, color: Colors.white),
-                  label: Text(
-                    '로그아웃',
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      color: Colors.white,
-                    ),
-                  ),
+                  icon: Icon(Icons.logout, color: ColorStyle.white),
+                  label: Text('로그아웃', style: Styles.boldwhite),
                   style: ElevatedButton.styleFrom(
-                    primary: Colors.blueGrey[900],
+                    backgroundColor: ColorStyle.blueGrey_900,
                     elevation: 0,
                     padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
                   ),
@@ -65,16 +61,10 @@ class ProfileScreen extends StatelessWidget {
                   onPressed: () {
                     Navigator.of(context).pop();
                   },
-                  icon: Icon(Icons.cancel, color: Colors.white),
-                  label: Text(
-                    '취소',
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      color: Colors.white,
-                    ),
-                  ),
+                  icon: Icon(Icons.cancel, color: ColorStyle.white),
+                  label: Text('취소', style: Styles.boldwhite),
                   style: ElevatedButton.styleFrom(
-                    primary: Colors.blueGrey[900],
+                    backgroundColor: ColorStyle.blueGrey_900,
                     elevation: 0,
                     padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
                   ),
@@ -96,7 +86,7 @@ class ProfileScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text('프로필'),
-        backgroundColor: Colors.blueGrey[900],
+        backgroundColor: ColorStyle.blueGrey_900,
         automaticallyImplyLeading: false,
       ),
       body: Center(
@@ -104,7 +94,7 @@ class ProfileScreen extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             CircleAvatar(
-              backgroundColor: Colors.blueGrey[900],
+              backgroundColor: ColorStyle.blueGrey_900,
               radius: 50,
               child: const Icon(
                 Icons.person,
@@ -113,14 +103,7 @@ class ProfileScreen extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 20),
-            Text(
-              user?.email ?? '사용자 이메일 없음',
-              style: TextStyle(
-                fontSize: 18,
-                fontWeight: FontWeight.bold,
-                color: Colors.blueGrey[900],
-              ),
-            ),
+            Text(user?.email ?? '사용자 이메일 없음', style: Styles.bold18c),
             const SizedBox(height: 10),
             ElevatedButton(
               onPressed: () {
@@ -128,14 +111,10 @@ class ProfileScreen extends StatelessWidget {
               },
               child: const Text('로그아웃'),
               style: ElevatedButton.styleFrom(
-                primary: Colors.blueGrey[900],
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 40, vertical: 16),
-                textStyle: const TextStyle(
-                  fontSize: 18,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
+                  backgroundColor: ColorStyle.blueGrey_900,
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 40, vertical: 16),
+                  textStyle: Styles.bold18),
             ),
           ],
         ),
@@ -143,9 +122,9 @@ class ProfileScreen extends StatelessWidget {
       bottomNavigationBar: BottomNavigationBar(
         onTap: (index) => _onTap(index, context),
         currentIndex: _currentIndex,
-        backgroundColor: Colors.blueGrey[900],
-        selectedItemColor: Colors.white,
-        unselectedItemColor: Colors.grey[400],
+        backgroundColor: ColorStyle.blueGrey_900,
+        selectedItemColor: ColorStyle.white,
+        unselectedItemColor: ColorStyle.grey_400,
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(
             icon: Icon(Icons.home),

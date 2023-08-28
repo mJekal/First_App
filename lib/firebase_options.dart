@@ -66,7 +66,8 @@ class DefaultFirebaseOptions {
     messagingSenderId: '84074855927',
     projectId: 'firstapp-2341c',
     storageBucket: 'firstapp-2341c.appspot.com',
-    iosClientId: '84074855927-pt42a0o9eig87p57d12klfr1n0a88pdc.apps.googleusercontent.com',
+    iosClientId:
+        '84074855927-pt42a0o9eig87p57d12klfr1n0a88pdc.apps.googleusercontent.com',
     iosBundleId: 'com.mjk.firstapp',
   );
 
@@ -76,7 +77,8 @@ class DefaultFirebaseOptions {
     messagingSenderId: '84074855927',
     projectId: 'firstapp-2341c',
     storageBucket: 'firstapp-2341c.appspot.com',
-    iosClientId: '84074855927-1g97549t8f2j7aapq1cq5lin0abne99f.apps.googleusercontent.com',
+    iosClientId:
+        '84074855927-1g97549t8f2j7aapq1cq5lin0abne99f.apps.googleusercontent.com',
     iosBundleId: 'com.mjk.firstapp.RunnerTests',
   );
 }

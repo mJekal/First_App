@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:firstapp/model/authentication.dart';
 import 'package:firstapp/model/login.dart';
+import 'package:firstapp/configs/color_styles.dart';
+import 'package:firstapp/configs/text_style.dart';
 
 class LoginScreen extends StatelessWidget {
   const LoginScreen({super.key});
@@ -15,7 +17,7 @@ class LoginScreen extends StatelessWidget {
           automaticallyImplyLeading: false,
           title: const Text("로그인"),
           centerTitle: true,
-          backgroundColor: Colors.blueGrey[900],
+          backgroundColor: ColorStyle.blueGrey_900,
         ),
         body: SingleChildScrollView(
           child: Column(
@@ -30,7 +32,7 @@ class LoginScreen extends StatelessWidget {
               const SizedBox(height: 16),
               Text(
                 '또는',
-                style: TextStyle(color: Colors.grey[700]),
+                style: TextStyle(color: ColorStyle.grey_700),
               ),
               const SizedBox(height: 16),
               const RegisterButton(),
@@ -100,7 +102,7 @@ class LoginButton extends StatelessWidget {
       height: 50,
       child: ElevatedButton(
         style: ElevatedButton.styleFrom(
-          backgroundColor: Colors.blueGrey[900],
+          backgroundColor: ColorStyle.blueGrey_900,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(30.0),
           ),
@@ -142,7 +144,7 @@ class RegisterButton extends StatelessWidget {
       },
       child: Text(
         '회원가입',
-        style: TextStyle(color: Colors.blueGrey[900], fontSize: 16),
+        style: Styles.size16c,
       ),
     );
   }

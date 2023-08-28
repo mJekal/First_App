@@ -1,5 +1,4 @@
 import 'dart:async';
-
 import 'package:firstapp/model/authentication.dart';
 import 'package:firstapp/provider/information_default.dart';
 import 'package:flutter/material.dart';
@@ -17,9 +16,9 @@ class _SplashScreenState extends State<SplashScreen> {
   Future<bool> checkLogin() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     final authClient =
-        Provider.of<FirebaseAuthProvider>(context, listen: false);
+    Provider.of<FirebaseAuthProvider>(context, listen: false);
     final informationProvider =
-        Provider.of<InformationProvider>(context, listen: false);
+    Provider.of<InformationProvider>(context, listen: false);
     bool isLogin = prefs.getBool('isLogin') ?? false;
     print("로그인 상태 : " + isLogin.toString());
     if (isLogin) {
@@ -43,11 +42,11 @@ class _SplashScreenState extends State<SplashScreen> {
     await checkLogin().then((isLogin) async {
       if (isLogin) {
         final authProvider =
-            Provider.of<FirebaseAuthProvider>(context, listen: false);
+        Provider.of<FirebaseAuthProvider>(context, listen: false);
         final currentUser = authProvider.user;
 
         final informationProvider =
-            Provider.of<InformationProvider>(context, listen: false);
+        Provider.of<InformationProvider>(context, listen: false);
         await informationProvider.fetchInformationListForUser(currentUser!.uid);
 
         Navigator.of(context).pushReplacementNamed('/main');
@@ -74,8 +73,14 @@ class _SplashScreenState extends State<SplashScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: null,
-      body: Container(
-        child: Image.asset("lib/assets/Logo.png", fit: BoxFit.cover),
+      body: LayoutBuilder(
+        builder: (context, constraints) {
+          return Container(
+            width: constraints.maxWidth,
+            height: constraints.maxHeight,
+            child: Image.asset("lib/assets/playstore.png", fit: BoxFit.cover),
+          );
+        },
       ),
     );
   }

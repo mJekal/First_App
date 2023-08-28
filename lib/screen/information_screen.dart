@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:firstapp/provider/information_default.dart';
 import 'package:firstapp/model/information.dart';
 import 'package:provider/provider.dart';
+import 'package:firstapp/configs/color_styles.dart';
+import 'package:firstapp/configs/text_style.dart';
 
 class InformationForm extends StatefulWidget {
   @override
@@ -58,7 +60,7 @@ class _InformationFormState extends State<InformationForm> {
           data: ThemeData.light().copyWith(
             colorScheme: ColorScheme.fromSwatch(
               primarySwatch: Colors.blueGrey,
-              accentColor: Colors.blueGrey[900],
+              accentColor: ColorStyle.blueGrey_900,
             ),
             buttonTheme: ButtonThemeData(textTheme: ButtonTextTheme.primary),
           ),
@@ -79,7 +81,7 @@ class _InformationFormState extends State<InformationForm> {
       appBar: AppBar(
         title: const Text('작심 며칠?'),
         centerTitle: true,
-        backgroundColor: Colors.blueGrey[900],
+        backgroundColor: ColorStyle.blueGrey_900,
       ),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(16.0),
@@ -93,7 +95,7 @@ class _InformationFormState extends State<InformationForm> {
                 child: Icon(
                   Icons.calendar_month,
                   size: 48,
-                  color: Colors.blueGrey[900],
+                  color: ColorStyle.blueGrey_900,
                 ),
               ),
               const SizedBox(height: 24),
@@ -103,7 +105,7 @@ class _InformationFormState extends State<InformationForm> {
                   border: OutlineInputBorder(),
                 ),
                 keyboardType: TextInputType.text,
-                style: const TextStyle(fontSize: 18),
+                style: Styles.size18,
                 validator: (value) {
                   if (value == null || value.isEmpty) {
                     return '목표를 입력하세요';
@@ -123,7 +125,7 @@ class _InformationFormState extends State<InformationForm> {
                   border: OutlineInputBorder(),
                 ),
                 keyboardType: TextInputType.text,
-                style: const TextStyle(fontSize: 18),
+                style: Styles.size18,
                 validator: (value) {
                   if (value == null || value.isEmpty) {
                     return '다짐 한마디를 입력하세요';
@@ -141,8 +143,8 @@ class _InformationFormState extends State<InformationForm> {
                 onPressed: _saveForm,
                 child: const Text('등록'),
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.blueGrey[900],
-                  textStyle: const TextStyle(fontSize: 18),
+                  backgroundColor: ColorStyle.blueGrey_900,
+                  textStyle: Styles.size18,
                   padding: const EdgeInsets.symmetric(
                     vertical: 16,
                     horizontal: 24,

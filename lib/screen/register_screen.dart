@@ -1,3 +1,5 @@
+import 'package:firstapp/configs/color_styles.dart';
+import 'package:firstapp/configs/text_style.dart';
 import 'package:firstapp/model/authentication.dart';
 import 'package:firstapp/model/register.dart';
 import 'package:flutter/material.dart';
@@ -13,7 +15,7 @@ class RegisterScreen extends StatelessWidget {
       child: Scaffold(
         appBar: AppBar(
           title: const Text('회원가입'),
-          backgroundColor: Colors.blueGrey[900],
+          backgroundColor: ColorStyle.blueGrey_900,
           centerTitle: true,
           automaticallyImplyLeading: false,
         ),
@@ -110,7 +112,7 @@ class RegisterButton extends StatelessWidget {
     return ElevatedButton(
       style: ElevatedButton.styleFrom(
         padding: const EdgeInsets.symmetric(vertical: 15),
-        backgroundColor: Colors.blueGrey[900],
+        backgroundColor: ColorStyle.blueGrey_900,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(30.0),
         ),
@@ -138,7 +140,7 @@ class RegisterButton extends StatelessWidget {
       },
       child: const Text(
         '회원가입',
-        style: TextStyle(fontSize: 16),
+        style: Styles.size16,
       ),
     );
   }
