@@ -46,6 +46,7 @@ class FirebaseAuthProvider with ChangeNotifier {
     }
   }
 
+
   Future<void> logout() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     prefs.setBool('isLogin', false);

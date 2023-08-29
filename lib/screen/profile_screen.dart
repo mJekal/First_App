@@ -1,9 +1,9 @@
-import 'package:firstapp/configs/color_styles.dart';
-import 'package:firstapp/configs/text_style.dart';
 import 'package:firstapp/screen/main_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:firstapp/model/authentication.dart';
 import 'package:provider/provider.dart';
+import 'package:firstapp/configs/color_styles.dart';
+import 'package:firstapp/configs/text_style.dart';
 
 class ProfileScreen extends StatelessWidget {
   int _currentIndex = 1;
@@ -80,7 +80,7 @@ class ProfileScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final authProvider =
-        Provider.of<FirebaseAuthProvider>(context, listen: false);
+    Provider.of<FirebaseAuthProvider>(context, listen: false);
     final user = authProvider.user;
 
     return Scaffold(
@@ -113,7 +113,7 @@ class ProfileScreen extends StatelessWidget {
               style: ElevatedButton.styleFrom(
                   backgroundColor: ColorStyle.blueGrey_900,
                   padding:
-                      const EdgeInsets.symmetric(horizontal: 40, vertical: 16),
+                  const EdgeInsets.symmetric(horizontal: 40, vertical: 16),
                   textStyle: Styles.bold18),
             ),
           ],

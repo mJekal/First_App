@@ -22,12 +22,10 @@ class _InformationFormState extends State<InformationForm> {
       _formKey.currentState!.save();
       String dDay = 'D+${DateTime.now().difference(_selectedDate).inDays + 1}';
 
-      final authProvider =
-          Provider.of<FirebaseAuthProvider>(context, listen: false);
+      final authProvider = Provider.of<FirebaseAuthProvider>(context, listen: false);
 
       if (authProvider.user != null) {
-        final informationProvider =
-            Provider.of<InformationProvider>(context, listen: false);
+        final informationProvider = Provider.of<InformationProvider>(context, listen: false);
 
         informationProvider.addInformation(
           Information(
@@ -80,7 +78,6 @@ class _InformationFormState extends State<InformationForm> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('작심 며칠?'),
-        centerTitle: true,
         backgroundColor: ColorStyle.blueGrey_900,
       ),
       body: SingleChildScrollView(
@@ -95,7 +92,7 @@ class _InformationFormState extends State<InformationForm> {
                 child: Icon(
                   Icons.calendar_month,
                   size: 48,
-                  color: ColorStyle.blueGrey_900,
+                  color:  ColorStyle.blueGrey_900,
                 ),
               ),
               const SizedBox(height: 24),

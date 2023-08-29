@@ -1,4 +1,5 @@
 import 'dart:async';
+
 import 'package:firstapp/model/authentication.dart';
 import 'package:firstapp/provider/information_default.dart';
 import 'package:flutter/material.dart';
@@ -17,8 +18,7 @@ class _SplashScreenState extends State<SplashScreen> {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     final authClient =
     Provider.of<FirebaseAuthProvider>(context, listen: false);
-    final informationProvider =
-    Provider.of<InformationProvider>(context, listen: false);
+    final informationProvider = Provider.of<InformationProvider>(context, listen: false);
     bool isLogin = prefs.getBool('isLogin') ?? false;
     print("로그인 상태 : " + isLogin.toString());
     if (isLogin) {
@@ -28,6 +28,7 @@ class _SplashScreenState extends State<SplashScreen> {
       await authClient.loginWithEmail(email!, password!).then((loginStatus) {
         if (loginStatus == AuthStatus.loginSuccess) {
           print("로그인 성공");
+
         } else {
           print("로그인 실패");
           isLogin = false;
@@ -41,12 +42,12 @@ class _SplashScreenState extends State<SplashScreen> {
   void moveScreen() async {
     await checkLogin().then((isLogin) async {
       if (isLogin) {
-        final authProvider =
-        Provider.of<FirebaseAuthProvider>(context, listen: false);
+
+        final authProvider = Provider.of<FirebaseAuthProvider>(context, listen: false);
         final currentUser = authProvider.user;
 
-        final informationProvider =
-        Provider.of<InformationProvider>(context, listen: false);
+
+        final informationProvider = Provider.of<InformationProvider>(context, listen: false);
         await informationProvider.fetchInformationListForUser(currentUser!.uid);
 
         Navigator.of(context).pushReplacementNamed('/main');

@@ -18,31 +18,25 @@ class MainScreen extends StatefulWidget {
 
 class _MainScreenState extends State<MainScreen> {
   int _currentIndex = 0;
-  User? currentUser;
 
   void _onTap(int index) {
     if (index == 0) {
-      Navigator.pushReplacement(
-          context, MaterialPageRoute(builder: (context) => const MainScreen()));
+      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => const MainScreen()));
     } else if (index == 1) {
-      Navigator.pushReplacement(
-          context, MaterialPageRoute(builder: (context) => ProfileScreen()));
+      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => ProfileScreen()));
     }
   }
 
   @override
-  void initState() {
-    super.initState();
-    _currentIndex = 0;
-  }
-
-  @override
   Widget build(BuildContext context) {
-    currentUser =
-        Provider.of<FirebaseAuthProvider>(context, listen: false).user;
+    final authProvider = Provider.of<FirebaseAuthProvider>(context, listen: false);
+    final currentUser = authProvider.user;
+
+    final informationProvider = Provider.of<InformationProvider>(context);
+    informationProvider.fetchInformationListForUser(currentUser!.uid); // 수정된 부분
 
     return Scaffold(
-      appBar: AppBar(
+      appBar:  AppBar(
         title: const Text('작심 며칠?'),
         backgroundColor: ColorStyle.blueGrey_900,
         automaticallyImplyLeading: false,
@@ -50,14 +44,15 @@ class _MainScreenState extends State<MainScreen> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          Navigator.push(context,
-              MaterialPageRoute(builder: (context) => InformationForm()));
+          Navigator.push(context, MaterialPageRoute(
+              builder: (context) => InformationForm()));
         },
         child: const Icon(Icons.add),
         backgroundColor: ColorStyle.blueGrey_900,
       ),
-      body: Consumer<InformationProvider>(
+      body:Consumer<InformationProvider>(
         builder: (context, informationProvider, _) {
+          informationProvider.fetchInformationListForUser(authProvider.user!.uid);
           final informationList = informationProvider.informationList;
 
           if (informationList.isEmpty) {
@@ -98,6 +93,9 @@ class _MainScreenState extends State<MainScreen> {
     );
   }
 
+
+
+
   Widget _listItem(BuildContext context, Information information, int index) {
     final goal = information.goal ?? '';
     final promise = information.promise ?? '';
@@ -124,7 +122,9 @@ class _MainScreenState extends State<MainScreen> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(goal, style: Styles.bold18),
+            Text(
+              goal,
+              style: Styles.bold18),
             const SizedBox(height: 2),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -150,7 +150,8 @@ class _MainScreenState extends State<MainScreen> {
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text('${information.goal} 결심 한지? ${information.dDay}',
+              Text(
+                '${information.goal} 결심 한지? ${information.dDay}',
                   style: Styles.bold18),
               const SizedBox(height: 8),
               Text(promise, style: Styles.bold18),
@@ -159,8 +160,8 @@ class _MainScreenState extends State<MainScreen> {
           actions: <Widget>[
             TextButton(
               onPressed: () {
-                final informationProvider =
-                    Provider.of<InformationProvider>(context, listen: false);
+                final informationProvider = Provider.of<InformationProvider>(
+                    context, listen: false);
                 informationProvider.deleteInformation(index);
                 Navigator.pop(context);
               },

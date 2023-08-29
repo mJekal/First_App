@@ -9,6 +9,9 @@ import 'package:firstapp/screen/main_screen.dart';
 import 'package:firstapp/screen/login_screen.dart';
 import 'package:firstapp/screen/register_screen.dart';
 
+
+
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
@@ -16,6 +19,7 @@ void main() async {
   );
   runApp(MyApp());
 }
+
 
 class MyApp extends StatelessWidget {
   MyApp({super.key});
@@ -33,7 +37,7 @@ class MyApp extends StatelessWidget {
           '/': (context) => SplashScreen(),
           '/login': (context) => LoginScreen(),
           '/main': (context) => MainScreen(),
-          '/register': (context) => RegisterScreen(),
+          '/register':(context) => RegisterScreen(),
         },
         initialRoute: '/',
       ),
