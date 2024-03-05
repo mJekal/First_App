@@ -1,4 +1,5 @@
 ## Introduction
+
 처음으로 개발에 도전해서 만들어본 어플 '작심 며칠?'입니다. 
 추후 리팩토링을 하거나 Kotlin으로 기능을 더 추가하여 다시 개발해볼 생각입니다.
 
@@ -9,30 +10,29 @@ Flutter와 Firebase를 사용하여 개발했습니다.
 
 ## 파일 구조
 
-lib/
-|-- assets/
-| |-- Logo.png
-| |-- playstore.png
-|-- configs/
-| |-- color_styles.dart
-| |-- text_style.dart
-|-- model/
-| |-- authentication.dart
-| |-- information.dart
-| |-- login.dart
-| |-- register.dart
-|-- provider/
-| |-- information_default.dart
-|-- screen/
-| |-- information_screen.dart
-| |-- login_screen.dart
-| |-- main_screen.dart
-| |-- profile_screen.dart
-| |-- register_screen.dart
-| |-- splash_screen.dart
-|-- firebase_options.dart
-|-- main.dart
-
+lib/  
+|-- assets/  
+| |-- Logo.png  
+| |-- playstore.png  
+|-- configs/  
+| |-- color_styles.dart  
+| |-- text_style.dart  
+|-- model/  
+| |-- authentication.dart  
+| |-- information.dart  
+| |-- login.dart  
+| |-- register.dart  
+|-- provider/  
+| |-- information_default.dart  
+|-- screen/  
+| |-- information_screen.dart  
+| |-- login_screen.dart  
+| |-- main_screen.dart  
+| |-- profile_screen.dart  
+| |-- register_screen.dart  
+| |-- splash_screen.dart  
+|-- firebase_options.dart  
+|-- main.dart  
 
 - **config/**: 색상 및 텍스트 스타일과 관련된 구성 요소를 포함하는 폴더입니다.
 - **model/**: 애플리케이션의 데이터 모델 및 인증과 관련된 클래스를 포함하는 폴더입니다.
